@@ -95,9 +95,9 @@ namespace dipl_01
         {
             CalculationManager.GetInstance().pool = CalculationManager.GetInstance().alg.GenerateInitial();
 
-            this.logBox.Text += "Init:\n";
-            foreach (ISolution a in CalculationManager.GetInstance().pool)
-                this.logBox.Text += CalculationManager.GetInstance().alg.GetProblem().SolPrint(a) + "\n";
+            //this.logBox.Text += "Init:\n";
+            //foreach (ISolution a in CalculationManager.GetInstance().pool)
+            //    this.logBox.Text += CalculationManager.GetInstance().alg.GetProblem().SolPrint(a) + "\n";
 
         }
 
@@ -163,10 +163,14 @@ namespace dipl_01
 
             watch.Stop();
 
+            this.logBox.Text += "FINAL:\n";
+            foreach (ISolution a in CalculationManager.GetInstance().pool)
+                this.logBox.Text += CalculationManager.GetInstance().alg.GetProblem().SolPrint(a) + "\n";
+
             this.logBox.Text += "Eval count: " + CalculationManager.GetInstance().alg.GetProblem().GetEvalCount() + "\n";
             this.logBox.Text += "Calculated res: " + CalculationManager.GetInstance().alg.GetProblem().Eval(
                 CalculationManager.GetInstance().alg.GetProblem().GetBestSol()) + "\n";
-            this.logBox.Text += "Elepsed time: " + watch.ElapsedMilliseconds;
+            this.logBox.Text += "Elapsed time: " + watch.ElapsedMilliseconds + "\n";
 
         }
 
