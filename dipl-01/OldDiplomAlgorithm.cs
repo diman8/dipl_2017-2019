@@ -8,6 +8,12 @@ namespace dipl_01
     class OldDiplomAlgorithm : IAlgorithm
     {
         private IProblem prb;
+        private int heap_size = 4;
+
+        public OldDiplomAlgorithm(int _heap_size)
+        {
+            heap_size = _heap_size;
+        }
 
         public void Init(IProblem prb)
         {
@@ -86,7 +92,7 @@ namespace dipl_01
             heap.Add(new Solution(0, prb.GetSize()));
             int[] temp = new int[prb.GetSize()];
             Array.Copy(heap[0].GetVec(), temp, temp.Length);
-            for (int k = 0; k < 3; k++)
+            for (int k = 0; k < (heap_size - 1); k++)
             {
                 int tmp = temp[0];
                 for (int i = 0; i < temp.Length - 1; i++)

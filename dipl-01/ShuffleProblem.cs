@@ -20,6 +20,11 @@ namespace dipl_01
             memento = new Dictionary<BigInteger, int>();
         }
 
+        public void ClearMemento()
+        {
+            memento = new Dictionary<BigInteger, int>();
+        }
+
         public ISolution GetBestSol()
         {
             return best_solution;

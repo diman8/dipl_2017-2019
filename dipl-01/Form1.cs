@@ -114,9 +114,9 @@ namespace dipl_01
                 } while (t.GetId() != p[i].GetId());
             }
 
-            this.logBox.Text += "HC:\n";
-            foreach (ISolution a in CalculationManager.GetInstance().pool)
-                this.logBox.Text += CalculationManager.GetInstance().alg.GetProblem().SolPrint(a) + "\n";
+            //this.logBox.Text += "HC:\n";
+            //foreach (ISolution a in CalculationManager.GetInstance().pool)
+            //    this.logBox.Text += CalculationManager.GetInstance().alg.GetProblem().SolPrint(a) + "\n";
         }
 
         private void buttonMutate_Click(object sender, EventArgs e)
@@ -124,9 +124,9 @@ namespace dipl_01
             CalculationManager cm = CalculationManager.GetInstance();
             cm.pool = cm.alg.Mutate(cm.pool);
 
-            this.logBox.Text += "Mutation:\n";
-            foreach (ISolution a in CalculationManager.GetInstance().pool)
-                this.logBox.Text += CalculationManager.GetInstance().alg.GetProblem().SolPrint(a) + "\n";
+            //this.logBox.Text += "Mutation:\n";
+            //foreach (ISolution a in CalculationManager.GetInstance().pool)
+            //    this.logBox.Text += CalculationManager.GetInstance().alg.GetProblem().SolPrint(a) + "\n";
         }
 
         private void logBox_TextChanged(object sender, EventArgs e)
@@ -137,13 +137,48 @@ namespace dipl_01
 
         private void buttonAutoCalculate_Click(object sender, EventArgs e)
         {
+            //CalculationManager.ScrapAndCreateNew();
+            if (CalculationManager.GetInstance().alg != null)
+            {
+                ShuffleProblem t = CalculationManager.GetInstance().alg.GetProblem() as ShuffleProblem;
+                if (t != null) t.ClearMemento();
+            }
+
+            var watch = System.Diagnostics.Stopwatch.StartNew();
+
+            buttonInitAlg_Click(sender, e);
+            buttonInitList_Click(sender, e);
+
+            int old_core_count = CalculationManager.GetInstance().alg.GetProblem().GetEvalCount();
+            do
+            {
+                buttonHC_Click(sender, e);
+                buttonMutate_Click(sender, e);
+                if (CalculationManager.GetInstance().alg.GetProblem().GetEvalCount() == old_core_count) break;
+                old_core_count = CalculationManager.GetInstance().alg.GetProblem().GetEvalCount();
+                CalculationManager.GetInstance().pool = CalculationManager.GetInstance().pool.Distinct().ToList();
+                if (CalculationManager.GetInstance().pool.Count == 1) break;
+            }
+            while (true);
+
+            watch.Stop();
+
+            this.logBox.Text += "Eval count: " + CalculationManager.GetInstance().alg.GetProblem().GetEvalCount() + "\n";
+            this.logBox.Text += "Calculated res: " + CalculationManager.GetInstance().alg.GetProblem().Eval(
+                CalculationManager.GetInstance().alg.GetProblem().GetBestSol()) + "\n";
+            this.logBox.Text += "Elepsed time: " + watch.ElapsedMilliseconds;
 
         }
 
         private void buttonInitAlg_Click(object sender, EventArgs e)
         {
-            CalculationManager.GetInstance().alg = new OldDiplomAlgorithm();
+            CalculationManager.GetInstance().alg = new OldDiplomAlgorithm(Int32.Parse(textBox1.Text));
             CalculationManager.GetInstance().alg.Init(CalculationManager.GetInstance().prb);
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
