@@ -104,19 +104,20 @@ namespace dipl_01
 
         public string Print()
         {
-            string temp = "Table:\n";
-            for (int i=0; i<problem.Length; i++)
-            {
-                for (int j = 0; j < problem[0].Length; j++)
-                {
-                    temp += problem[i][j] + " ";
-                }
-                temp += "\n";
-            }
-            temp += "Solution:\n";
-            ISolution a = new Solution(solution);
-            temp += a.Print() + "\n";
-            temp += "Result:\n" + result + "\n";
+            string temp = "";
+            //temp += "Table:\n";
+            //for (int i=0; i<problem.Length; i++)
+            //{
+            //    for (int j = 0; j < problem[0].Length; j++)
+            //    {
+            //        temp += problem[i][j] + " ";
+            //    }
+            //    temp += "\n";
+            //}
+            //temp += "Solution:\n";
+            //ISolution a = new Solution(solution);
+            //temp += a.Print() + "\n";
+            temp += "Result precalc:" + result + "\n";
             return temp;
         }
 

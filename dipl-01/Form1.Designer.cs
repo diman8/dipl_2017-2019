@@ -45,6 +45,7 @@
             this.radioButtonGetFirst = new System.Windows.Forms.RadioButton();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
+            this.processBatch_button = new System.Windows.Forms.Button();
             this.groupManualControl.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
@@ -99,13 +100,13 @@
             // 
             // groupManualControl
             // 
+            resources.ApplyResources(this.groupManualControl, "groupManualControl");
             this.groupManualControl.Controls.Add(this.buttonInitAlg);
             this.groupManualControl.Controls.Add(this.buttonInitList);
             this.groupManualControl.Controls.Add(this.buttonCross);
             this.groupManualControl.Controls.Add(this.buttonEval);
             this.groupManualControl.Controls.Add(this.buttonMutate);
             this.groupManualControl.Controls.Add(this.buttonHC);
-            resources.ApplyResources(this.groupManualControl, "groupManualControl");
             this.groupManualControl.Name = "groupManualControl";
             this.groupManualControl.TabStop = false;
             // 
@@ -125,10 +126,10 @@
             // 
             // groupBox1
             // 
+            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Controls.Add(this.radioButtonGetAll);
             this.groupBox1.Controls.Add(this.radioButtonGetBest);
             this.groupBox1.Controls.Add(this.radioButtonGetFirst);
-            resources.ApplyResources(this.groupBox1, "groupBox1");
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.TabStop = false;
             // 
@@ -163,6 +164,13 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
+            // processBatch_button
+            // 
+            resources.ApplyResources(this.processBatch_button, "processBatch_button");
+            this.processBatch_button.Name = "processBatch_button";
+            this.processBatch_button.UseVisualStyleBackColor = true;
+            this.processBatch_button.Click += new System.EventHandler(this.processBatch_button_Click);
+            // 
             // Form1
             // 
             resources.ApplyResources(this, "$this");
@@ -172,6 +180,7 @@
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.groupManualControl);
             this.Controls.Add(this.buttonAutoCalculate);
+            this.Controls.Add(this.processBatch_button);
             this.Controls.Add(this.buttonLoadProblem);
             this.Controls.Add(this.logBox);
             this.Name = "Form1";
@@ -201,6 +210,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button buttonInitAlg;
+        private System.Windows.Forms.Button processBatch_button;
     }
 }
 

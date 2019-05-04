@@ -48,11 +48,9 @@ namespace dipl_01
                     CalculationManager.GetInstance().prb = JsonConvert.DeserializeObject<ShuffleProblem>(text);
                     //CalculationManager.GetInstance().alg = new SecondDiplomAlgorithm(4);
                     //CalculationManager.GetInstance().alg.Init(temp);
-
                     logBox.Text += temp.Print();
                     temp.SetBestSol(new Solution(temp.solution));
-                    logBox.Text += "Calculated res: " + temp.Eval(temp.best_solution) + "\n";
-
+                    //logBox.Text += "Calculated res: " + temp.Eval(temp.best_solution) + "\n";
                     CalculationManager.GetInstance().prb = temp;
                 }
                 catch (IOException)
@@ -163,13 +161,30 @@ namespace dipl_01
 
             watch.Stop();
 
-            this.logBox.Text += "FINAL:\n";
-            foreach (ISolution a in CalculationManager.GetInstance().pool)
-                this.logBox.Text += CalculationManager.GetInstance().alg.GetProblem().SolPrint(a) + "\n";
+            //{
+            //    this.logBox.Text += "FINAL:\n";
+            //    foreach (ISolution a in CalculationManager.GetInstance().pool)
+            //        this.logBox.Text += CalculationManager.GetInstance().alg.GetProblem().SolPrint(a) + "\n";
+            //}
+            {
+                ISolution ressol = CalculationManager.GetInstance().pool.First();
+                foreach (ISolution a in CalculationManager.GetInstance().pool)
+                {
+                    if (CalculationManager.GetInstance().alg.GetProblem().Eval(a) < CalculationManager.GetInstance().alg.GetProblem().Eval(ressol))
+                    {
+                        ressol = a;
+                    }
+                }
+                if (ressol != null)
+                {
+                    this.logBox.Text += "FINAL:" + CalculationManager.GetInstance().alg.GetProblem().Eval(ressol) + "\n";
+                }
+            }
+
 
             this.logBox.Text += "Eval count: " + CalculationManager.GetInstance().alg.GetProblem().GetEvalCount() + "\n";
-            this.logBox.Text += "Calculated res: " + CalculationManager.GetInstance().alg.GetProblem().Eval(
-                CalculationManager.GetInstance().alg.GetProblem().GetBestSol()) + "\n";
+            //this.logBox.Text += "Calculated res: " + CalculationManager.GetInstance().alg.GetProblem().Eval(
+            //    CalculationManager.GetInstance().alg.GetProblem().GetBestSol()) + "\n";
             this.logBox.Text += "Elapsed time: " + watch.ElapsedMilliseconds + "\n";
 
         }
@@ -183,6 +198,54 @@ namespace dipl_01
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void processBatch_button_Click(object sender, EventArgs e)
+        {
+            string[] files = null;
+            using (OpenFileDialog file = new OpenFileDialog())
+            {
+                //Allow to select multiple files
+                file.Multiselect = true;
+                
+                file.Filter = "Only jsons | *.json";
+
+                //Show the Dialog box to select file(s)
+                DialogResult result = file.ShowDialog();
+                
+                if (result == DialogResult.OK)
+                {
+                    //return input file names
+                    files = file.FileNames;
+                }
+                else return;
+            }
+            if (files != null)
+            {
+                foreach (var file in files)
+                {
+                    this.logBox.Text += Path.GetFileName(file) + "\n";
+
+                    try
+                    {
+                        string text = File.ReadAllText(file);
+                        ShuffleProblem temp = JsonConvert.DeserializeObject<ShuffleProblem>(text);
+
+                        CalculationManager.GetInstance().prb = JsonConvert.DeserializeObject<ShuffleProblem>(text);
+                        logBox.Text += temp.Print();
+                        temp.SetBestSol(new Solution(temp.solution));
+                        CalculationManager.GetInstance().prb = temp;
+
+                        // autocalc
+                        buttonAutoCalculate_Click(sender, e);
+                    }
+                    catch (IOException)
+                    {
+                    }
+
+                    this.logBox.Text += "----------\n";
+                }
+            }
         }
     }
 }
