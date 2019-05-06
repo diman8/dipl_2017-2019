@@ -50,9 +50,10 @@ namespace dipl_01
             int tmp;
             if (!memento.TryGetValue(solution.GetId(), out tmp))
             {
-                memento.Add(solution.GetId(), DirectEval(solution));
+                tmp = DirectEval(solution);
+                memento.Add(solution.GetId(), tmp);
             }
-            return memento[solution.GetId()];
+            return tmp;
         }
 
         private int DirectEval(ISolution solution)

@@ -10,7 +10,20 @@ namespace dipl_01
     {
         private static Random random = new Random();
 
-        static public BigInteger Factorial(int i)
+        static private Dictionary<int, BigInteger> memento = new Dictionary<int, BigInteger>();
+        
+        static public BigInteger Factorial(int input)
+        {
+            BigInteger tmp;
+            if (!memento.TryGetValue(input, out tmp))
+            {
+                tmp = TrueFactorial(input);
+                memento.Add(input, tmp);
+            }
+            return tmp;
+        }
+
+        static public BigInteger TrueFactorial(int i)
         {
             switch(i)
             {
