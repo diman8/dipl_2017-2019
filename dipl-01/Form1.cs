@@ -222,6 +222,11 @@ namespace dipl_01
             }
             if (files != null)
             {
+                this.logBox.Clear();
+
+                string folderName = Path.GetDirectoryName(files[0]);
+                this.logBox.Text += folderName + "\n";
+
                 foreach (var file in files)
                 {
                     this.logBox.Text += Path.GetFileName(file) + "\n";
@@ -244,6 +249,16 @@ namespace dipl_01
                     }
 
                     this.logBox.Text += "----------\n";
+                }
+
+                {
+                    // save logs
+                    string logName = Path.GetDirectoryName(files[0]) + "\\log.txt";
+                    using (FileStream stream = File.OpenWrite(logName))
+                    using (BinaryWriter writer = new BinaryWriter(stream))
+                    {
+                        writer.Write(logBox.Text);
+                    }
                 }
             }
         }
