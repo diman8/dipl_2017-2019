@@ -148,7 +148,8 @@ namespace dipl_01
             buttonInitList_Click(sender, e);
 
             int old_core_count = CalculationManager.GetInstance().alg.GetProblem().GetEvalCount();
-            do
+            int i = 0;
+            for (i=0;i<50;i++)
             {
                 buttonHC_Click(sender, e);
                 buttonMutate_Click(sender, e);
@@ -157,7 +158,10 @@ namespace dipl_01
                 CalculationManager.GetInstance().pool = CalculationManager.GetInstance().pool.Distinct().ToList();
                 if (CalculationManager.GetInstance().pool.Count == 1) break;
             }
-            while (true);
+            if (i==50)
+            {
+                this.logBox.Text += "Calc was breaked due to calculation limits.\n";
+            }
 
             watch.Stop();
 
