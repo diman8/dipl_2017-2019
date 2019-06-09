@@ -1,0 +1,61 @@
+ÑC:\Users\THINKPAD01\Documents\DIPLOM-2017\json-zadachi\2019-txts\100-20
+01.json
+Result precalc:6286
+FINAL:6526
+Eval count: 5641069
+Elapsed time: 415409
+----------
+02.json
+Result precalc:6241
+FINAL:6649
+Eval count: 4379452
+Elapsed time: 319768
+----------
+03.json
+Result precalc:6329
+FINAL:4685
+Eval count: 1014760
+Elapsed time: 41343
+----------
+04.json
+Result precalc:6306
+FINAL:4495
+Eval count: 1241288
+Elapsed time: 49869
+----------
+05.json
+Result precalc:6377
+FINAL:6683
+Eval count: 4384205
+Elapsed time: 314019
+----------
+06.json
+Result precalc:6437
+FINAL:4508
+Eval count: 1378518
+Elapsed time: 54973
+----------
+07.json
+Result precalc:6346
+FINAL:6606
+Eval count: 5740022
+Elapsed time: 421835
+----------
+08.json
+Result precalc:6481
+FINAL:4604
+Eval count: 1095191
+Elapsed time: 43678
+----------
+09.json
+Result precalc:6358
+FINAL:6605
+Eval count: 5967617
+Elapsed time: 436745
+----------
+10.json
+Result precalc:6465
+FINAL:4607
+Eval count: 1060533
+Elapsed time: 41159
+----------
