@@ -149,7 +149,7 @@ namespace dipl_01
 
             int old_core_count = CalculationManager.GetInstance().alg.GetProblem().GetEvalCount();
             int i = 0;
-            for (i=0;i<50;i++)
+            for (i=0;i<70;i++)
             {
                 buttonHC_Click(sender, e);
                 buttonMutate_Click(sender, e);
@@ -158,7 +158,7 @@ namespace dipl_01
                 CalculationManager.GetInstance().pool = CalculationManager.GetInstance().pool.Distinct().ToList();
                 if (CalculationManager.GetInstance().pool.Count == 1) break;
             }
-            if (i==50)
+            if (i==70)
             {
                 this.logBox.Text += "Calc was breaked due to calculation limits.\n";
             }
@@ -181,21 +181,22 @@ namespace dipl_01
                 }
                 if (ressol != null)
                 {
-                    this.logBox.Text += "FINAL:" + CalculationManager.GetInstance().alg.GetProblem().Eval(ressol) + "\n";
+                    this.logBox.Text += CalculationManager.GetInstance().alg.GetProblem().Eval(ressol) + "\t";
                 }
             }
 
 
-            this.logBox.Text += "Eval count: " + CalculationManager.GetInstance().alg.GetProblem().GetEvalCount() + "\n";
-            //this.logBox.Text += "Calculated res: " + CalculationManager.GetInstance().alg.GetProblem().Eval(
-            //    CalculationManager.GetInstance().alg.GetProblem().GetBestSol()) + "\n";
-            this.logBox.Text += "Elapsed time: " + watch.ElapsedMilliseconds + "\n";
+            this.logBox.Text += CalculationManager.GetInstance().alg.GetProblem().GetEvalCount() + "\t";
+            this.logBox.Text += watch.ElapsedMilliseconds + "\n";
 
         }
 
         private void buttonInitAlg_Click(object sender, EventArgs e)
         {
-            CalculationManager.GetInstance().alg = new OldDiplomAlgorithm(Int32.Parse(textBox1.Text));
+            if (radioButtonGetFirst.Checked) CalculationManager.GetInstance().alg = new OldDiplomAlgorithm(Int32.Parse(textBox1.Text), OldDiplomAlgorithm.AlgType.First);
+            else if (radioButtonGetBest.Checked) CalculationManager.GetInstance().alg = new OldDiplomAlgorithm(Int32.Parse(textBox1.Text), OldDiplomAlgorithm.AlgType.Best);
+            else if (radioButtonGetAll.Checked) CalculationManager.GetInstance().alg = new OldDiplomAlgorithm(Int32.Parse(textBox1.Text), OldDiplomAlgorithm.AlgType.All);
+            else return;
             CalculationManager.GetInstance().alg.Init(CalculationManager.GetInstance().prb);
         }
 
@@ -228,12 +229,12 @@ namespace dipl_01
             {
                 this.logBox.Clear();
 
-                string folderName = Path.GetDirectoryName(files[0]);
-                this.logBox.Text += folderName + "\n";
+                string folderName = Path.GetFileName(Path.GetDirectoryName(files[0]));
+                //this.logBox.Text += folderName + "\n";
 
                 foreach (var file in files)
                 {
-                    this.logBox.Text += Path.GetFileName(file) + "\n";
+                    this.logBox.Text += Path.GetFileName(file) + "\t";
 
                     try
                     {
@@ -252,12 +253,12 @@ namespace dipl_01
                     {
                     }
 
-                    this.logBox.Text += "----------\n";
+                    //this.logBox.Text += "\n";
                 }
 
                 {
                     // save logs
-                    string logName = Path.GetDirectoryName(files[0]) + "\\log.txt";
+                    string logName = Path.GetDirectoryName(Path.GetDirectoryName(files[0])) + "\\" + folderName + ".txt";
                     using (FileStream stream = File.OpenWrite(logName))
                     using (BinaryWriter writer = new BinaryWriter(stream))
                     {

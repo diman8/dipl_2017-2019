@@ -118,7 +118,7 @@ namespace dipl_01
             //temp += "Solution:\n";
             //ISolution a = new Solution(solution);
             //temp += a.Print() + "\n";
-            temp += "Result precalc:" + result + "\n";
+            temp += result + "\t";
             return temp;
         }
 

@@ -136,15 +136,15 @@
             // radioButtonGetAll
             // 
             resources.ApplyResources(this.radioButtonGetAll, "radioButtonGetAll");
-            this.radioButtonGetAll.Checked = true;
             this.radioButtonGetAll.Name = "radioButtonGetAll";
-            this.radioButtonGetAll.TabStop = true;
             this.radioButtonGetAll.UseVisualStyleBackColor = true;
             // 
             // radioButtonGetBest
             // 
             resources.ApplyResources(this.radioButtonGetBest, "radioButtonGetBest");
+            this.radioButtonGetBest.Checked = true;
             this.radioButtonGetBest.Name = "radioButtonGetBest";
+            this.radioButtonGetBest.TabStop = true;
             this.radioButtonGetBest.UseVisualStyleBackColor = true;
             // 
             // radioButtonGetFirst

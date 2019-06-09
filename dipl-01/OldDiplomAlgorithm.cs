@@ -7,12 +7,15 @@ namespace dipl_01
 {
     class OldDiplomAlgorithm : IAlgorithm
     {
+        public enum AlgType { First, Best, All };
+        public AlgType type;
         private IProblem prb;
         private int heap_size = 4;
 
-        public OldDiplomAlgorithm(int _heap_size)
+        public OldDiplomAlgorithm(int _heap_size, AlgType _type = AlgType.Best)
         {
             heap_size = _heap_size;
+            type = _type;
         }
 
         public void Init(IProblem prb)
@@ -117,18 +120,61 @@ namespace dipl_01
 
         public List<ISolution> Mutate(List<ISolution> lst)
         {
+            List <ISolution> buffer = new List<ISolution>();
             ISolution first = lst[0];
             for (int i=0;i<lst.Count-1;i++)
             {
                 List<ISolution> path = BuildPath(lst[i], lst[i + 1]);
                 foreach (ISolution a in path)
-                    if (prb.Eval(a) <= prb.Eval(lst[i])) lst[i] = a;
+                {
+                    if (type == AlgType.Best)
+                    {
+                        if (prb.Eval(a) <= prb.Eval(lst[i])) lst[i] = a;
+                    }
+
+                    if (type == AlgType.First)
+                    {
+                        if (prb.Eval(a) <= prb.Eval(lst[i])) { lst[i] = a; break; }
+                    }
+
+                    if (type == AlgType.All)
+                    {
+                        if (prb.Eval(a) <= prb.Eval(lst[i])) { buffer.Add(a); }
+                    }
+                }
             }
             {
                 List<ISolution> path = BuildPath(lst[lst.Count-1], first);
                 foreach (ISolution a in path)
-                    if (prb.Eval(a) < prb.Eval(lst[lst.Count - 1])) lst[lst.Count - 1] = a;
+                {
+                    if (type == AlgType.Best)
+                    {
+                        if (prb.Eval(a) <= prb.Eval(lst[lst.Count - 1])) lst[lst.Count - 1] = a;
+                    }
+
+                    if (type == AlgType.First)
+                    {
+                        if (prb.Eval(a) <= prb.Eval(lst[lst.Count - 1])) { lst[lst.Count - 1] = a; break; }
+                    }
+
+                    if (type == AlgType.All)
+                    {
+                        if (prb.Eval(a) <= prb.Eval(lst[lst.Count - 1])) { buffer.Add(a); }
+                    }
+                }
             }
+
+            if (type == AlgType.All)
+            {
+                lst.AddRange(buffer);
+                lst = lst.Distinct().ToList();
+                lst.Sort();
+                if (lst.Count > heap_size)
+                {
+                    lst.RemoveRange(heap_size, lst.Count - heap_size);
+                }
+            }
+
             return lst;
         }
 
